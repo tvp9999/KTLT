@@ -1,12 +1,12 @@
 import socket 
 
 
-def auth(conn, users):    # authentication
+def auth(conn, users):   
     authenticated = False
 
     while not authenticated:
-        username = conn.recv(1024).decode('utf-8')    # receive the 1st msg from the client 
-        password = conn.recv(1024).decode('utf-8')    # receive the 2nd msg from the client
+        username = conn.recv(1024).decode('utf-8')    # receive the 1st msg from client 
+        password = conn.recv(1024).decode('utf-8')    # receive the 2nd msg from client
 
         if username in users and users[username] == password:
             conn.send(b"Authenticated!")
@@ -46,7 +46,7 @@ def main():
 
     conn, addr = server_socket.accept()
 
-    if auth(conn, users):    # allow client to start communicating 
+    if auth(conn, users):    # if client authenticated successfully -> allow client to start communicating 
         print(f"Connected by  {addr[0]} : {addr[1]}")
         handle_client(conn)
 
