@@ -1,12 +1,12 @@
-import socket
+import socket 
 
 
-def auth(conn, users):
+def auth(conn, users):    # authentication
     authenticated = False
 
     while not authenticated:
-        username = conn.recv(1024).decode('utf-8')
-        password = conn.recv(1024).decode('utf-8')
+        username = conn.recv(1024).decode('utf-8')    # receive the 1st msg from the client 
+        password = conn.recv(1024).decode('utf-8')    # receive the 2nd msg from the client
 
         if username in users and users[username] == password:
             conn.send(b"Authenticated!")
@@ -16,14 +16,14 @@ def auth(conn, users):
     return authenticated
 
 
-def handle_client(conn):
+def handle_client(conn):    
     while True:
         try:
-            msg = conn.recv(1024).decode('utf-8')
+            msg = conn.recv(1024).decode('utf-8')    
             if msg.lower() == 'quit':
                 print('Client disconnected!')
                 break
-            print(f"Client: {msg}")
+            print(f"Client: {msg}")    # print received msg
             conn.send(input("Server: ").encode('utf-8'))
         except Exception as e:
             print(str(e))
@@ -31,13 +31,13 @@ def handle_client(conn):
     conn.close()
 
 
-def main():
+def main():    
     host = '127.0.0.1'
     port = 12345
 
-    users = {'u1': 'pwd1', 'u2': 'pwd2'}
+    users = {'u1': 'pwd1', 'u2': 'pwd2'}    
 
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    
 
     server_socket.bind((host, port))
 
@@ -46,7 +46,7 @@ def main():
 
     conn, addr = server_socket.accept()
 
-    if auth(conn, users):
+    if auth(conn, users):    # allow client to start communicating 
         print(f"Connected by  {addr[0]} : {addr[1]}")
         handle_client(conn)
 
