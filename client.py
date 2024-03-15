@@ -1,18 +1,18 @@
 import socket
 
 
-def auth(client_socket):
+def auth(client_socket):    
     authenticated = False
 
-    while not authenticated:
-        username = input("Enter username: ")
+    while not authenticated:    
+        username = input("Enter username: ")    
         password = input("Enter password: ")
 
-        client_socket.send(username.encode('utf-8'))
+        client_socket.send(username.encode('utf-8'))    # send the msg include username & passwd to server
         client_socket.send(password.encode('utf-8'))
 
-        response = client_socket.recv(1024).decode('utf-8')
-        print(response)
+        response = client_socket.recv(1024).decode('utf-8')    # receive msg either "Authenticated" or "..." from server
+        print(response)    
 
         if response == "Authenticated!":
             authenticated = True
@@ -22,7 +22,7 @@ def auth(client_socket):
     return authenticated
 
 
-def communicate(client_socket):
+def communicate(client_socket):    # communicate with server
     while True:
         message = input('Client: ')
 
