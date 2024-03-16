@@ -30,12 +30,12 @@ def main():
     conn, addr = server_socket.accept()
     print(f"Connected by {addr[0]}:{addr[1]}")
 
-    # Tạo context chỉ định version và cung cấp certificate, key 
+    # create a context and provide version, key and certificate
     context = SSL.Context(SSL.TLSv1_2_METHOD)
     context.use_privatekey_file('private.key')
     context.use_certificate_file('cert.pem')
 
-    # Đóng gói ssl với SSL/TLS
+    # wrap socket with ssl/tls
     ssl_conn = SSL.Connection(context, conn)
     ssl_conn.set_accept_state()
     ssl_conn.do_handshake()
