@@ -27,6 +27,7 @@ def main():
 
     context = SSL.Context(SSL.TLSv1_2_METHOD)
 
+    # wrap socket with ssl/tls
     ssl_conn = SSL.Connection(context, client_socket)
     ssl_conn.set_connect_state()
     ssl_conn.do_handshake()
